@@ -1,0 +1,82 @@
+SampleID	TreeID	TreeSpecies	Microhabitat	Stratum
+K129_Bl_Fr	K129	Quercus robur	Fresh Leaves	Canopy
+K129_Bod	K129	Quercus robur	Soil	Ground
+K129_Bor	K129	Quercus robur	Bark	Canopy
+K129_Det	K129	Quercus robur	Arboreal Soil	Canopy
+K129_Fl	K129	Quercus robur	Lichen	Canopy
+K129_Hyp	K129	Quercus robur	Hypnum	Canopy
+K129_Laub	K129	Quercus robur	Leaf Litter	Ground
+K129_Oth	K129	Quercus robur	Orthotrichum	Canopy
+K129_Tot	K129	Quercus robur	Deadwood	Canopy
+K232_Bl_Fr	K232	Fraxinus excelsior	Fresh Leaves	Canopy
+K232_Bod	K232	Fraxinus excelsior	Soil	Ground
+K232_Bor	K232	Fraxinus excelsior	Bark	Canopy
+K232_Det	K232	Fraxinus excelsior	Arboreal Soil	Canopy
+K232_Fl	K232	Fraxinus excelsior	Lichen	Canopy
+K232_Hyp	K232	Fraxinus excelsior	Hypnum	Canopy
+K232_Laub	K232	Fraxinus excelsior	Leaf Litter	Ground
+K232_Oth	K232	Fraxinus excelsior	Orthotrichum	Canopy
+K232_Tot	K232	Fraxinus excelsior	Deadwood	Canopy
+K317_Bl_Fr	K317	Quercus robur	Fresh Leaves	Canopy
+K317_Bod	K317	Quercus robur	Soil	Ground
+K317_Bor	K317	Quercus robur	Bark	Canopy
+K317_Det	K317	Quercus robur	Arboreal Soil	Canopy
+K317_Fl	K317	Quercus robur	Lichen	Canopy
+K317_Hyp	K317	Quercus robur	Hypnum	Canopy
+K317_Laub	K317	Quercus robur	Leaf Litter	Ground
+K317_Oth	K317	Quercus robur	Orthotrichum	Canopy
+K317_Tot	K317	Quercus robur	Deadwood	Canopy
+K439_Bl_Fr	K439	Tilia cordata	Fresh Leaves	Canopy
+K439_Bod	K439	Tilia cordata	Soil	Ground
+K439_Bor	K439	Tilia cordata	Bark	Canopy
+K439_Det	K439	Tilia cordata	Arboreal Soil	Canopy
+K439_Fl	K439	Tilia cordata	Lichen	Canopy
+K439_Hyp	K439	Tilia cordata	Hypnum	Canopy
+K439_Laub	K439	Tilia cordata	Leaf Litter	Ground
+K439_Oth	K439	Tilia cordata	Orthotrichum	Canopy
+K439_Tot	K439	Tilia cordata	Deadwood	Canopy
+K455_Bl_Fr	K455	Tilia cordata	Fresh Leaves	Canopy
+K455_Bod	K455	Tilia cordata	Soil	Ground
+K455_Bor	K455	Tilia cordata	Bark	Canopy
+K455_Det	K455	Tilia cordata	Arboreal Soil	Canopy
+K455_Fl	K455	Tilia cordata	Lichen	Canopy
+K455_Hyp	K455	Tilia cordata	Hypnum	Canopy
+K455_Laub	K455	Tilia cordata	Leaf Litter	Ground
+K455_Oth	K455	Tilia cordata	Orthotrichum	Canopy
+K455_Tot	K455	Tilia cordata	Deadwood	Canopy
+K517_Bl_Fr	K517	Tilia cordata	Fresh Leaves	Canopy
+K517_Bod	K517	Tilia cordata	Soil	Ground
+K517_Bor	K517	Tilia cordata	Bark	Canopy
+K517_Det	K517	Tilia cordata	Arboreal Soil	Canopy
+K517_Fl	K517	Tilia cordata	Lichen	Canopy
+K517_Hyp	K517	Tilia cordata	Hypnum	Canopy
+K517_Laub	K517	Tilia cordata	Leaf Litter	Ground
+K517_Oth	K517	Tilia cordata	Orthotrichum	Canopy
+K517_Tot	K517	Tilia cordata	Deadwood	Canopy
+K592_Bl_Fr	K592	Fraxinus excelsior	Fresh Leaves	Canopy
+K592_Bod	K592	Fraxinus excelsior	Soil	Ground
+K592_Bor	K592	Fraxinus excelsior	Bark	Canopy
+K592_Det	K592	Fraxinus excelsior	Arboreal Soil	Canopy
+K592_Fl	K592	Fraxinus excelsior	Lichen	Canopy
+K592_Hyp	K592	Fraxinus excelsior	Hypnum	Canopy
+K592_Laub	K592	Fraxinus excelsior	Leaf Litter	Ground
+K592_Oth	K592	Fraxinus excelsior	Orthotrichum	Canopy
+K592_Tot	K592	Fraxinus excelsior	Deadwood	Canopy
+K733_Bl_Fr	K733	Quercus robur	Fresh Leaves	Canopy
+K733_Bod	K733	Quercus robur	Soil	Ground
+K733_Bor	K733	Quercus robur	Bark	Canopy
+K733_Det	K733	Quercus robur	Arboreal Soil	Canopy
+K733_Fl	K733	Quercus robur	Lichen	Canopy
+K733_Hyp	K733	Quercus robur	Hypnum	Canopy
+K733_Laub	K733	Quercus robur	Leaf Litter	Ground
+K733_Oth	K733	Quercus robur	Orthotrichum	Canopy
+K733_Tot	K733	Quercus robur	Deadwood	Canopy
+K770_Bl_Fr	K770	Fraxinus excelsior	Fresh Leaves	Canopy
+K770_Bod	K770	Fraxinus excelsior	Soil	Ground
+K770_Bor	K770	Fraxinus excelsior	Bark	Canopy
+K770_Det	K770	Fraxinus excelsior	Arboreal Soil	Canopy
+K770_Fl	K770	Fraxinus excelsior	Lichen	Canopy
+K770_Hyp	K770	Fraxinus excelsior	Hypnum	Canopy
+K770_Laub	K770	Fraxinus excelsior	Leaf Litter	Ground
+K770_Oth	K770	Fraxinus excelsior	Orthotrichum	Canopy
+K770_Tot	K770	Fraxinus excelsior	Deadwood	Canopy
