@@ -20,8 +20,9 @@ rm(list = ls())
 
 library(ggplot2)
 library(plyr)
+library(ggpubr)
 
-setwd("02_Taxonomic_Annotation_and_Visualisation/")
+#setwd("02_Taxonomic_Annotation_and_Visualisation/")
 
 TAX = read.csv("../00_Data/Oomycota/04_OwnSamples_OTU_ContingencyTable_filtered_sequences_NCBI-nt_blasted_sorted_BestHit-TaxonomyTable_Oomycetes_sequences_vsearch-ITS1-BestHit_AnnotationRefined_noPipe.tsv", 
                     header = F, 
@@ -59,6 +60,7 @@ TAX$PercentIDrounded = mround(TAX$PercentID, 1) / 100
 # You can also round to the nearest e.g. 5% by putting "5" instead of "1"
 
 # Aggregate Abundances with the same percent identity
+PercentID = TAX$PercentID
 AggregatedTAXpercent = ddply(TAX, "PercentID", numcolwise(sum))
 AggregatedTAXpercent$PercentID = AggregatedTAXpercent$PercentID / 100
 
@@ -74,11 +76,11 @@ We can also combine the data from the Oomycetes with the Cercozoa data.
 To do so, we run everything again on the cerco tables:
 
 ```{r Cerco Data, results='hide', message=FALSE}
-Cerco_TAX = read.csv("../Cercozoa/04_Cercozoa_OwnSamples_OTU_ContingencyTable_filtered_sequences_NCBI-nt_blasted_sorted_BestHit-TaxonomyTable_Cercozoa_sequences_vsearch-V4-BestHit_AnnotationRefined_noPipe.tsv", 
+Cerco_TAX = read.csv("../00_Data/Cercozoa/04_Cercozoa_OwnSamples_OTU_ContingencyTable_filtered_sequences_NCBI-nt_blasted_sorted_BestHit-TaxonomyTable_Cercozoa_sequences_vsearch-V4-BestHit_AnnotationRefined_noPipe.tsv", 
                     header = F, 
                     sep = "\t", 
                     stringsAsFactors = T)
-Cerco_OTU_Table = as.data.frame(read.csv("../Cercozoa/05_Cercozoa_OwnSamples_OTU_Table_min-freq-15684_transposed_withMetadata.tsv", 
+Cerco_OTU_Table = as.data.frame(read.csv("../00_Data/Cercozoa/05_Cercozoa_OwnSamples_OTU_Table_min-freq-15684_transposed_withMetadata.tsv", 
                      header = T, 
                      sep = "\t", 
                      stringsAsFactors = T))
@@ -102,7 +104,7 @@ Cerco_AggregatedTAXpercent_expanded = Cerco_AggregatedTAXpercent[rep(row.names(C
 
 Next we add the group (Oomycota and Cercozoa, respectively) which we will use to fill the two different histograms. Then we combine the data and load it into `ggplot`
 
-```{r SequenceSimilarityPlotReads, fig.height=9, fig.width=16}
+```{r SequenceSimilarityPlotReads, message=FALSE, warning=FALSE, fig.height=9, fig.width=16}
 AggregatedTAXpercent_expanded$Group = "Oomycota"
 Cerco_AggregatedTAXpercent_expanded$Group = "Cercozoa"
 
@@ -146,7 +148,7 @@ This means that many sequences can be assigned to at least an order or a family,
 
 Let's do the same but not for the number of reads, but for the number of OTUs. Here we need the "regular" taxonomy table from both groups:
 
-```{r SequenceSimilarityPlotOTUs}
+```{r SequenceSimilarityPlotOTUs, message=FALSE, warning=FALSE}
 TAX_subset = subset(TAX, select = "PercentID")
 TAX_subset$Group = "Oomycota"
 TAX_subset$PercentID = TAX_subset$PercentID / 100
@@ -184,7 +186,7 @@ g_OTU
 
 Interestingly, most OTUs also account for most reads with a ~100% similarity to references. However, the two peaks at ca. 76% and 88% are only due to few OTUs. This means that few OTUs (but with a very high abundance!) may represent new undescribed lineages in our samples.
 
-```{r}
+```{r CombinedSequenceSimilarityPlot, message=FALSE, warning=FALSE, fig.width=16, fig.height=9}
 g$labels$title = NULL
 g_OTU$labels$title = NULL
 g$labels$x = NULL
