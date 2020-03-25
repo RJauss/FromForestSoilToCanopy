@@ -71,9 +71,9 @@ The .html file contains a lot of information, very interesting is the `Interacti
 
 As you can see some samples are very well covered, some are not. To get rid of random effects resulting from low sampling depth, we can exclude some samples and filter by sampling depth. The interactive bar-chart shows how many samples and microhabitats would be excluded given a specific sampling depth, e.g. min. 5439 reads:
 
-![images/Autumn_2018_minfreq-5439_Microhabitat.png]
+![Microhabitat Qiime filtered](images/Autumn_2018_minfreq-5439_Microhabitat.png)
 
-![images/Autumn_2018_minfreq-5439_TreeSpecies.png]
+![Tree species Qiime filtered](images/Autumn_2018_minfreq-5439_TreeSpecies.png)
 
 I decided to set the minimum sampling depth depending on how many samples from each microhabitat and tree species would be excluded. I set it as high as possible while retaining a minimum of **5 samples per microhabitat** and **15 samples per tree species** 
 
