@@ -124,4 +124,23 @@ g_cerco
 
 ![](Nestedness_files/figure-markdown_github/CercoNestedness-1.png)
 
+``` r
+combi = ggarrange(g_cerco, g, 
+                  labels = c("A", "B"), 
+                  ncol = 2, nrow = 1, 
+                  align = "h")
+
+#ggsave("NestedCombined.tif", plot = combi, 
+#       device = "tiff", dpi = 300, width = 29.7, height = 16, 
+#       units = "cm")
+ggsave("NestedCombined.png", plot = combi, 
+       device = "png", dpi = 600, width = 29.7, height = 16, 
+       units = "cm")
+ggsave("NestedCombined.pdf", plot = combi, 
+       device = "pdf", dpi = 600, width = 29.7, height = 16, 
+       units = "cm")
+
+combi
+```
+
 ![](Nestedness_files/figure-markdown_github/NestednessCombined-1.png)
