@@ -27,7 +27,7 @@ This section provides scripts on how to **[import, explore and filter the OTU ta
 Here we deal with the methods of **[plotting rarefaction curves](04_Alpha_Diversity/RarefactionCurves.md)** and of course how to **[plot alpha diversity indices in a boxplot](04_Alpha_Diversity/AlphaBoxplot.md)**.
 
 ### 05 Exploring Beta Diversity
-One of the most straightforward methods of visualising beta diversity is an NMDS plot, the script is provided **[here](04_Beta_Diversity/NMDS.md)**. But we also perform and plot a **[redundancy analysis](04_Beta_Diversity/RedundancyAnalysis.md)**. 
+One of the most straightforward methods of visualising beta diversity is an NMDS plot, the script is provided **[here](05_Beta_Diversity/NMDS.md)**. But we also perform and plot a **[redundancy analysis](05_Beta_Diversity/RedundancyAnalysis.md)**. 
 
 ### 06 Incidence based diversity
 This section deals with the **[visualisation of shared OTUs](06_Incidence-based_Diversity/Visualise_shared_OTUs.md)** and how to plot a **[species accumulation curve](06_Incidence-based_Diversity/SpeciesAccumulationCurve.md)**. Furthermore, we explore the OTU table to **[check for nestedness](06_Incidence-based_Diversity/Nestedness.md)** in our OTU distribution.
