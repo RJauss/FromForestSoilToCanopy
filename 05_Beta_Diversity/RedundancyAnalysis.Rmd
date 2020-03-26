@@ -272,11 +272,11 @@ combi = ggarrange(g_cerco, g,
   #                                face = "bold", size = 20))
 
 ggsave("RedundancyCombined.pdf", plot = combi, 
-       device = "pdf", dpi = 300, width = 8, height = 16, 
+       device = "pdf", dpi = 600, width = 20, height = 26, 
        units = "in")
-ggsave("RedundancyCombined.tif", plot = combi, 
-       device = "tiff", dpi = 300, width = 8, height = 10, 
-       units = "in")
+#ggsave("RedundancyCombined.tif", plot = combi, 
+#       device = "tiff", dpi = 600, width = 20, height = 26, 
+#       units = "in")
 ggsave("RedundancyCombined.png", plot = combi, 
        device = "png", dpi = 600, width = 20, height = 26, 
        units = "cm")
