@@ -13,7 +13,7 @@ Here are the versions and authors of the used programs (as of May 2019):
 ## Merge Raw data
 The Cologne Center for Genomics sequenced our samples on a MiSeq platform with 250bp paired reads. As we amplified the ITS1 region of the oomycetes, which is  ca. 250-350bp long, we expect quite a long overlap between the paired reads.
 
-We merge our reads with `vsearch`, as described in the [`MergePaired.sh`](https://github.com/RJauss/ProtistMetabarcoding/blob/master/Scripts/01_MetabarcodingPipeline/MergePaired.sh) script:
+We merge our reads with `vsearch`, like this:
 
 ```sh
 VSEARCH=$(which vsearch)
@@ -32,7 +32,7 @@ OUTPUT="01_Oomycota.merged.fastq"
     --fastq_allowmergestagger \
     --quiet 2>> ${OUTPUT/.fastq/.log}
 ```
-Looking at the generated log file, we see some statistics after the merging (this output is from the Spring-Autumn_2018 samples!):
+Looking at the generated log file, we see some statistics after the merging (this output is from the Spring-Autumn_2018 samples, which is not published yet):
 
       14888229  Pairs
       13223430  Merged (88.8%)
@@ -81,7 +81,7 @@ Because we are dealing with merged contigs ("single end" so to say), we need the
     Forward: GCGGAAGGATCATTACCAC
 	Reverse: GCTCGCACAHCGATGAAGA <- This is already reverse complemented
 	
-With that, we can start the [`Demux_PrimClip_SampDeRep_QualExtr.sh`](https://github.com/RJauss/ProtistMetabarcoding/blob/master/Scripts/01_MetabarcodingPipeline/Demux_PrimClip_SampDeRep_QualExtr.sh) script:
+With that, we can start the demultiplexing, primer clipping and quality extraction:
 
 ```sh
 INPUT="01_Oomycota.merged.fastq"
@@ -226,8 +226,7 @@ We also get a quality file (`01_Oomycota.merged.qual`) listing the expected erro
 
 ## Global dereplication, clustering and chimera detection
 
-Next we pool the 81 samples and do the dereplication, clustering and chimera detection. 
-Here we use the [`GlobalDeRep_Cluster_Chimera.sh`](https://github.com/RJauss/ProtistMetabarcoding/blob/master/Scripts/01_MetabarcodingPipeline/GlobalDeRep_Cluster_Chimera.sh) script:
+Next we pool the 81 samples and do the dereplication, clustering and chimera detection:
 
 ```sh
 VSEARCH=$(which vsearch)
@@ -313,7 +312,7 @@ grep "^>" 03_OwnSamples_1f_representatives.fas | \
 
 ## Build the OTU Table
 
-The OTU table is built with a python script ([`OTU_contingency_table.py`](https://github.com/RJauss/ProtistMetabarcoding/blob/master/Scripts/01_MetabarcodingPipeline/OTU_contingency_table.py), see below. Note that this is **python 2.7**). All of the previously generated files are used to build the table. Scritly speaking, the resulting table is not a OTU table *per se*, but rather a **contingency table**, because it contains the abundances per OTU and sample (only this would be considered a "real" OTU table) as well as OTU-metadata (like quality, sequence, seed ID and so on).
+The OTU table is built with a python script (`OTU_contingency_table.py`, see below. Note that this is **python 2.7**). All of the previously generated files are used to build the table. Scritly speaking, the resulting table is not a OTU table *per se*, but rather a **contingency table**, because it contains the abundances per OTU and sample (only this would be considered a "real" OTU table) as well as OTU-metadata (like quality, sequence, seed ID and so on).
 
 The files must be provided in a specific order, which is:
 
@@ -629,7 +628,7 @@ The OTU table has several columns:
 
 The trailing columns are the abundances of the OTUs in these samples. 
 
-The only filtering we applied so far is removing unmerged reads, very short reads and reads without tags and primers. What we want to do now is to remove chimeras, low quality OTUs and OTUs represented by less than 0.05% of the total reads (this is a bit harsher than removing the classical singletons). Then, we split the Contingency table into the OTU-table and metadata table. To do so, we can use `awk` and `cut`, as described in the [`Filter_OTU_Table.sh`](https://github.com/RJauss/ProtistMetabarcoding/blob/master/Scripts/01_MetabarcodingPipeline/Filter_OTU_Table.sh) script:
+The only filtering we applied so far is removing unmerged reads, very short reads and reads without tags and primers. What we want to do now is to remove chimeras, low quality OTUs and OTUs represented by less than 0.05% of the total reads (this is a bit harsher than removing the classical singletons). Then, we split the Contingency table into the OTU-table and metadata table. To do so, we can use `awk` and `cut`, as described in this script:
 
 ```sh
 TABLE="04_OwnSamples_OTU_ContingencyTable.tsv"
