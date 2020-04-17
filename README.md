@@ -2,9 +2,9 @@
 
 Welcome to the **From Forest Soil to the Canopy** repository!
 
-This repository is a collection of several scripts and mini-tutorials guiding you through the methods of metabarcoding analyses which were performed in the paper by [Jauss & Walden et al., 2020]().
+This repository is a collection of several scripts and mini-tutorials guiding you through the methods of metabarcoding analyses which were performed in the paper by [Jauss & Walden et al., 2020](https://doi.org/10.22541/au.158679920.02842084).
 
-Most scripts here deal with the data for oomycetes, but they were also applied for Cercozoa if not stated otherwise. The raw data can be downloaded [here](), plots and figures were generated with the final OTU tables (not provided, but accessible [here]()) and annotation files accessible in the folder [00_Data](00_Data/). 
+Most scripts here deal with the data for oomycetes, but they were also applied for Cercozoa if not stated otherwise. The raw data can be downloaded [here](https://www.ebi.ac.uk/ena/browser/view/PRJEB37525), plots and figures were generated with the final OTU tables (not provided, but accessible [here]()) and annotation files accessible in the folder [00_Data](00_Data/). 
 
 ## Table of Content
 *Relevant scripts and tutorials can be found in the corresponding markdown files, which are* **linked and highlighted** *for each category.*
