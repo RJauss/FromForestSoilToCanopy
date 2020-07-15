@@ -126,7 +126,7 @@ g = ggplot(AggregatedTAXpercent_expanded[AggregatedTAXpercent_expanded > 0, ], a
   scale_x_continuous(labels = scales::percent_format(accuracy = 1)) + 
   scale_y_continuous(labels = scales::comma) +
   theme_minimal() +
-  labs(x = "Sequence similarity to reference database", 
+  labs(x = "Sequence similarity to\nreference database", 
        y = "Number of reads", 
        title = "OTU similarities to reference sequences") +
   theme(axis.text=element_text(size=12), 
@@ -171,7 +171,7 @@ g_OTU = ggplot(TAX_subset[TAX_subset$PercentID > 0, ], aes(x = PercentID)) +
                     limits = c("Oomycota", "Cercozoa")) +
   scale_x_continuous(labels = scales::percent_format(accuracy = 1)) + 
   theme_minimal() +
-  labs(x = "Sequence similarity to reference database", 
+  labs(x = "Sequence similarity to\nreference database", 
        y = "Number of OTUs", 
        title = "OTU similarities to reference sequences") +
   theme(axis.text=element_text(size=12), 
@@ -189,8 +189,6 @@ Interestingly, most OTUs also account for most reads with a ~100% similarity to 
 ```{r CombinedSequenceSimilarityPlot, message=FALSE, warning=FALSE, fig.width=16, fig.height=9}
 g$labels$title = NULL
 g_OTU$labels$title = NULL
-g$labels$x = NULL
-g_OTU$labels$x = NULL
 
 combi = ggarrange(g, g_OTU, 
                   labels = c("A", "B"), 
