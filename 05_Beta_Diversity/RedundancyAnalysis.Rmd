@@ -21,6 +21,7 @@ library(vegan)
 library(RColorBrewer)
 library(funrar)
 library(ggpubr)
+library(viridis)
 
 #setwd("05_Beta_Diversity/")
 
@@ -86,7 +87,7 @@ g = ggplot(df2, aes(x=RDA1, y=RDA2)) +
                              linetype = "Microhabitat", color = Microhabitat), 
                arrow=arrow(length=unit(0.01,"npc")), 
                size = 1.5, alpha = 0.9) +
-  scale_color_manual(values = c(brewer.pal(7, "YlGn"), 
+  scale_color_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                      limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                 "Fresh Leaves", "Hypnum", "Lichen", 
@@ -97,10 +98,10 @@ g = ggplot(df2, aes(x=RDA1, y=RDA2)) +
                  hjust=c(0,0,1,1,0,0,1,1,0), 
                  #hjust=0.5*(1-sign(RDA1)),
                  vjust=0.5*(1-sign(RDA2))), 
-             color = "black", size=4, 
-             fill = c(brewer.pal(7, "YlGn")[1:5], 
+             color = "white", size=4, 
+             fill = c(viridis(7, direction = -1)[1:5], 
                       "#8e8878", 
-                      brewer.pal(7, "YlGn")[6:7], 
+                      viridis(7, direction = -1)[6:7], 
                       "#524640")) + 
   geom_segment(data=df3, aes(x=0, xend=RDA1, y=0, yend=RDA2, 
                              linetype = "Tree Species", color = TreeSpecies), 
@@ -112,7 +113,7 @@ g = ggplot(df2, aes(x=RDA1, y=RDA2)) +
                 hjust=0.5*(1-sign(RDA1)),
                 vjust=0.5*(1-sign(RDA2))), 
             fill= c("#c2b2b4", "#53687e", "#6b4e71"), 
-            color = "black", size=4) + 
+            color = "white", size=4) + 
   scale_x_continuous(limits = c(-0.6, 0.6)) + 
   scale_y_continuous(limits = c(-0.6, 0.6)) +
   labs(title = "Redundancy Analysis - Oomycota", 
@@ -192,7 +193,7 @@ g_cerco = ggplot(df2_cerco, aes(x=RDA1, y=RDA2)) +
                              linetype = "Microhabitat", color = Microhabitat), 
                arrow=arrow(length=unit(0.01,"npc")), 
                size = 1.5, alpha = 0.9) +
-  scale_color_manual(values = c(brewer.pal(7, "YlGn"), 
+  scale_color_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                      limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                 "Fresh Leaves", "Hypnum", "Lichen", 
@@ -203,10 +204,10 @@ g_cerco = ggplot(df2_cerco, aes(x=RDA1, y=RDA2)) +
                  hjust=c(0,0,1,1,0,1,1,0,1), 
                  #hjust=0.5*(1-sign(RDA1)),
                  vjust=0.5*(1-sign(RDA2))), 
-             color = "black", size=4, 
-             fill = c(brewer.pal(7, "YlGn")[1:5], 
+             color = "white", size=4, 
+             fill = c(viridis(7, direction = -1)[1:5], 
                       "#8e8878", 
-                      brewer.pal(7, "YlGn")[6:7], 
+                      viridis(7, direction = -1)[6:7], 
                       "#524640")) + 
   geom_segment(data=df3_cerco, aes(x=0, xend=RDA1, y=0, yend=RDA2, 
                              linetype = "Tree Species", color = TreeSpecies), 
@@ -218,7 +219,7 @@ g_cerco = ggplot(df2_cerco, aes(x=RDA1, y=RDA2)) +
                 hjust=0.5*(1-sign(RDA1)),
                 vjust=c(0,1,0)), 
             fill= c("#c2b2b4", "#53687e", "#6b4e71"), 
-            color = "black", size=4) + 
+            color = "white", size=4) + 
   scale_x_continuous(limits = c(-0.6, 0.6)) + 
   scale_y_continuous(limits = c(-0.6, 0.8)) +
   labs(title = "Redundancy Analysis - Cercozoa", 
@@ -253,10 +254,10 @@ The pattern is quite similar, but the axes explain a lot more variation. Also, w
 Now we combine both plots and save the file for the manuscript:
 
 ```{r RedundancyAnalysisCombined, fig.width=8, fig.height=16, dpi=600}
-g$labels$x = sub("\n", " - ", g$labels$x)
-g$labels$y = sub("\n", " - ", g$labels$y)
-g_cerco$labels$x = sub("\n", " - ", g_cerco$labels$x)
-g_cerco$labels$y = sub("\n", " - ", g_cerco$labels$y)
+#g$labels$x = sub("\n", " - ", g$labels$x)
+#g$labels$y = sub("\n", " - ", g$labels$y)
+#g_cerco$labels$x = sub("\n", " - ", g_cerco$labels$x)
+#g_cerco$labels$y = sub("\n", " - ", g_cerco$labels$y)
 
 g$labels$title = NULL
 g_cerco$labels$title = NULL
@@ -265,20 +266,23 @@ combi = ggarrange(g_cerco, g,
                   labels = c("A", "B"), 
                   ncol = 1, nrow = 2, 
                   common.legend = T, legend = "bottom", 
-                  align = "h", vjust = 2.5) #%>%
+                  align = "h", vjust = 1) #%>%
   #annotate_figure(fig.lab = "Figure X", fig.lab.face = "bold", 
   #                fig.lab.size = 18, 
   #                top = text_grob("Redundancy Analysis", 
   #                                face = "bold", size = 20))
 
 ggsave("RedundancyCombined.pdf", plot = combi, 
-       device = "pdf", dpi = 600, width = 20, height = 26, 
-       units = "in")
+       device = "pdf", dpi = 300, width = 20, height = 20, 
+       units = "cm")
+ggsave("RedundancyCombined.jpeg", plot = combi, 
+       device = "jpeg", dpi = 300, width = 20, height = 20, 
+       units = "cm")
 #ggsave("RedundancyCombined.tif", plot = combi, 
 #       device = "tiff", dpi = 600, width = 20, height = 26, 
 #       units = "in")
 ggsave("RedundancyCombined.png", plot = combi, 
-       device = "png", dpi = 600, width = 20, height = 26, 
+       device = "png", dpi = 300, width = 20, height = 20, 
        units = "cm")
 
 combi

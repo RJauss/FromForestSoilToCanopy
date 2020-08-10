@@ -16,6 +16,7 @@ library(ggplot2)
 library(funrar)
 library(ggpubr)
 library(RColorBrewer)
+library(viridis)
 
 #setwd("05_Beta_Diversity/")
 
@@ -82,21 +83,21 @@ I personally do not like the default colours from `ggplot`. So here I use colour
 g = ggplot() + 
   geom_polygon(data = hull.data, 
                aes(x=NMDS1, y=NMDS2, group = Microhabitat, fill = Microhabitat), 
-               alpha = 0.7) + 
+               alpha = 0.9) + 
   scale_fill_manual(limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                "Fresh Leaves",  "Hypnum", "Lichen", 
                                "Orthotrichum", "Leaf Litter", "Soil"), 
-                    values = c(brewer.pal(7, "YlGn"), 
+                    values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640")) + 
   geom_point(data = data.scores, 
              aes(x = NMDS1, y = NMDS2), 
-             size = 3,
+             size = 2,
              color = "#5d5f66") + 
   geom_polygon(data = hull.data_TreeSpecies, 
                aes(x=NMDS1, y=NMDS2, group = TreeSpecies, color = TreeSpecies), 
                alpha = 0.7, fill = NA, linetype = "dashed", size = 1) +
   scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71")) +
-  geom_text(aes(x = 0.3, y = -0.5, label = as.character(paste0(OTU.NMDS.bray$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
+  geom_text(aes(x = 0.25, y = -0.5, label = as.character(paste0(OTU.NMDS.bray$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
   coord_equal() + 
   theme_minimal() +
   labs(title = "Oomycota") +
@@ -150,8 +151,8 @@ hull.data1_3_TreeSpecies = rbind(Group1_3.Tilia, Group1_3.Quercus, Group1_3.Frax
 ggplot() + 
   geom_polygon(data = hull.data1_3, 
                aes(x=NMDS1, y=NMDS3, group = Microhabitat, fill = Microhabitat), 
-               alpha = 0.7) + 
-  scale_fill_manual(values = c(brewer.pal(7, "YlGn"), 
+               alpha = 0.9) + 
+  scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                "Fresh Leaves",  "Hypnum", "Lichen", 
@@ -208,40 +209,47 @@ OTU.NMDS.bray_cerco = metaMDS(Dist_cerco, # The distance matrix
 ```
 
     ## Run 0 stress 0.1079607 
-    ## Run 1 stress 0.1127175 
-    ## Run 2 stress 0.1130532 
-    ## Run 3 stress 0.1076592 
+    ## Run 1 stress 0.1150984 
+    ## Run 2 stress 0.1159765 
+    ## Run 3 stress 0.1123812 
+    ## Run 4 stress 0.1076601 
     ## ... New best solution
-    ## ... Procrustes: rmse 0.02083543  max resid 0.1482688 
-    ## Run 4 stress 0.11792 
-    ## Run 5 stress 0.1206277 
-    ## Run 6 stress 0.1108243 
-    ## Run 7 stress 0.1079615 
-    ## ... Procrustes: rmse 0.02079639  max resid 0.148028 
-    ## Run 8 stress 0.1115934 
-    ## Run 9 stress 0.1129404 
-    ## Run 10 stress 0.1185313 
-    ## Run 11 stress 0.1117249 
-    ## Run 12 stress 0.1129361 
-    ## Run 13 stress 0.1168467 
-    ## Run 14 stress 0.1106266 
-    ## Run 15 stress 0.1138969 
-    ## Run 16 stress 0.1158643 
-    ## Run 17 stress 0.1181424 
-    ## Run 18 stress 0.1145292 
-    ## Run 19 stress 0.1130891 
-    ## Run 20 stress 0.1159759 
-    ## Run 21 stress 0.1144649 
-    ## Run 22 stress 0.11676 
-    ## Run 23 stress 0.109813 
-    ## Run 24 stress 0.1167739 
-    ## Run 25 stress 0.1168983 
-    ## Run 26 stress 0.1118392 
-    ## Run 27 stress 0.1098136 
-    ## Run 28 stress 0.1135913 
-    ## Run 29 stress 0.1186194 
-    ## Run 30 stress 0.1076599 
-    ## ... Procrustes: rmse 0.0002610692  max resid 0.0009955281 
+    ## ... Procrustes: rmse 0.0207833  max resid 0.1480889 
+    ## Run 5 stress 0.1115885 
+    ## Run 6 stress 0.1118165 
+    ## Run 7 stress 0.1106263 
+    ## Run 8 stress 0.1117256 
+    ## Run 9 stress 0.1108549 
+    ## Run 10 stress 0.1118396 
+    ## Run 11 stress 0.1174023 
+    ## Run 12 stress 0.1107903 
+    ## Run 13 stress 0.1105669 
+    ## Run 14 stress 0.1127127 
+    ## Run 15 stress 0.110791 
+    ## Run 16 stress 0.1118396 
+    ## Run 17 stress 0.1157553 
+    ## Run 18 stress 0.1107897 
+    ## Run 19 stress 0.1110343 
+    ## Run 20 stress 0.1135712 
+    ## Run 21 stress 0.1155427 
+    ## Run 22 stress 0.1115251 
+    ## Run 23 stress 0.1108553 
+    ## Run 24 stress 0.1098133 
+    ## Run 25 stress 0.1138352 
+    ## Run 26 stress 0.1109132 
+    ## Run 27 stress 0.1149215 
+    ## Run 28 stress 0.1179135 
+    ## Run 29 stress 0.1156976 
+    ## Run 30 stress 0.1152558 
+    ## Run 31 stress 0.1196421 
+    ## Run 32 stress 0.11079 
+    ## Run 33 stress 0.1121874 
+    ## Run 34 stress 0.1190362 
+    ## Run 35 stress 0.1115196 
+    ## Run 36 stress 0.1138955 
+    ## Run 37 stress 0.1076599 
+    ## ... New best solution
+    ## ... Procrustes: rmse 0.0003945649  max resid 0.001575083 
     ## ... Similar to previous best
     ## *** Solution reached
 
@@ -276,21 +284,21 @@ hull.data_TreeSpecies_cerco = rbind(Group_cerco.Tilia, Group_cerco.Quercus, Grou
 g_cerco = ggplot() + 
   geom_polygon(data = hull.data_cerco, 
                aes(x=NMDS1, y=NMDS2, group = Microhabitat, fill = Microhabitat), 
-               alpha = 0.7) + 
+               alpha = 0.9) + 
   scale_fill_manual(limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                "Fresh Leaves",  "Hypnum", "Lichen", 
                                "Orthotrichum", "Leaf Litter", "Soil"), 
-                    values = c(brewer.pal(7, "YlGn"), 
+                    values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640")) + 
   geom_point(data = data.scores_cerco, 
              aes(x = NMDS1, y = NMDS2), 
-             size = 3,
+             size = 2,
              color = "#5d5f66") + 
   geom_polygon(data = hull.data_TreeSpecies_cerco, 
                aes(x=NMDS1, y=NMDS2, group = TreeSpecies, color = TreeSpecies), 
                alpha = 0.7, fill = NA, linetype = "dashed", size = 1) +
   scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71")) +
-  geom_text(aes(x = 0.3, y = -0.5, label = as.character(paste0(OTU.NMDS.bray_cerco$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray_cerco$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
+  geom_text(aes(x = 0.2, y = -0.4, label = as.character(paste0(OTU.NMDS.bray_cerco$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray_cerco$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
   coord_equal() + 
   theme_minimal() +
   labs(title = "Cercozoa") +
@@ -326,9 +334,12 @@ combi = ggarrange(g_cerco, g,
 #       device = "tiff", dpi = 600, width = 28, height = 11, 
 #       units = "cm")
 ggsave("NMDSCombined.png", plot = combi, 
-       device = "png", dpi = 600, width = 28, height = 11, 
+       device = "png", dpi = 300, width = 20, height = 10, 
+       units = "cm")
+ggsave("NMDSCombined.jpeg", plot = combi, 
+       device = "jpeg", dpi = 300, width = 20, height = 10, 
        units = "cm")
 ggsave("NMDSCombined.pdf", plot = combi, 
-       device = "pdf", dpi = 600, width = 28, height = 11, 
+       device = "pdf", dpi = 300, width = 20, height = 10, 
        units = "cm")
 ```

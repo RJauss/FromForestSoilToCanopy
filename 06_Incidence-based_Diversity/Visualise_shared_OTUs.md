@@ -95,9 +95,10 @@ Using ggupset is actually straightforward, because what it does is replacing the
 g = ggplot(tidy_Dataframe, aes(x = shared_OTUs)) +
   # plot the shard OTUs
   geom_bar() +
-  geom_label(aes(label=..count..), 
-             stat="count", 
-             position=position_stack()) +
+  #geom_label(aes(label=..count..), 
+  #           stat="count", 
+  #           position=position_stack(), 
+  #           size = 2) +
   # convert to combination matrix
   scale_x_upset() +
   # display only 15 intersections
@@ -114,7 +115,7 @@ g = ggplot(tidy_Dataframe, aes(x = shared_OTUs)) +
                    panel.grid.major.x = element_blank(), 
                    panel.grid.minor.x = element_blank(), 
                    plot.margin = unit(c(0.5,0.5,0.5,1.8), "cm"))+ 
-  labs(x = NULL, y = "Number of shared OTUs")
+  labs(x = NULL, y = "Number of\nshared OTUs")
 
 g
 ```
@@ -196,9 +197,10 @@ tidy_Dataframe_cerco = tidy_Microhabitats_cerco %>%
 
 g_cerco = ggplot(tidy_Dataframe_cerco, aes(x = shared_OTUs_cerco)) +
   geom_bar() +
-  geom_label(aes(label=..count..), 
-             stat="count", 
-             position=position_stack()) +
+  #geom_label(aes(label=..count..), 
+  #           stat="count", 
+  #           position=position_stack(), 
+  #           size = 2) +
   scale_x_upset(sets = c("Leaf Litter", "Bark", "Deadwood", 
                          "Arboreal Soil", "Fresh Leaves", "Soil", 
                          "Lichen", "Hypnum", "Orthotrichum"), 
@@ -216,7 +218,7 @@ g_cerco = ggplot(tidy_Dataframe_cerco, aes(x = shared_OTUs_cerco)) +
                    panel.grid.major.x = element_blank(), 
                    panel.grid.minor.x = element_blank(), 
                    plot.margin = unit(c(0.5,0.5,0.5,1.8), "cm"))+ 
-  labs(x = NULL, y = "Number of shared OTUs")
+  labs(x = NULL, y = "Number of\nshared OTUs")
 
 
 tidy_Microhabitats_cerco$Microhabitats_cerco = factor(tidy_Microhabitats_cerco$Microhabitats_cerco, levels = rownames(as.data.frame(specnumber(Aggregated_Microhabitat_cerco) %>% sort())))
@@ -252,13 +254,13 @@ Combine both groups
 Now if you want to combine both groups of Cercozoa and Oomycota into one plot, here is a way to do it:
 
 ``` r
-ga_cerco = ggdraw() + 
-  draw_plot(a_cerco, x = 0, y = 0, width = 0.2, height = 0.49) + 
-  draw_plot(g_cerco, x = 0.2, y = 0.045, height = 0.955, width = 0.8)
+ga_cerco = ggdraw(clip = "on") + 
+  draw_plot(a_cerco, x = 0, y = 0, width = 0.25, height = 0.65) + 
+  draw_plot(g_cerco, x = 0.2, y = 0.07, height = 0.93, width = 0.8)
 
-ga = ggdraw() + 
-  draw_plot(a, x = 0, y = 0, width = 0.2, height = 0.485) + 
-  draw_plot(g, x = 0.2, y = 0.045, height = 0.955, width = 0.8)
+ga = ggdraw(clip = "on") + 
+  draw_plot(a, x = 0, y = 0, width = 0.25, height = 0.65) + 
+  draw_plot(g, x = 0.2, y = 0.07, height = 0.93, width = 0.8)
 
 combi = ggarrange(ga_cerco, ga, 
                   labels = c("A", "B"), 
@@ -272,12 +274,15 @@ combi$theme$panel.background = element_blank()
 
 
 ggsave("UpSetRCombined.pdf", plot = combi, 
-       device = "pdf", dpi = 600, width = 19, height = 26, 
+       device = "pdf", dpi = 300, width = 18, height = 20, 
        units = "cm")
-ggsave("UpSetRCombined.tif", plot = combi, 
-       device = "tiff", dpi = 600, width = 19, height = 26, 
-       units = "cm")
+#ggsave("UpSetRCombined.tif", plot = combi, 
+#       device = "tiff", dpi = 600, width = 19, height = 26, 
+#       units = "cm")
 ggsave("UpSetRCombined.png", plot = combi, 
-       device = "png", dpi = 600, width = 19, height = 26, 
+       device = "png", dpi = 300, width = 18, height = 20, 
+       units = "cm")
+ggsave("UpSetRCombined.jpeg", plot = combi, 
+       device = "jpeg", dpi = 300, width = 18, height = 20, 
        units = "cm")
 ```

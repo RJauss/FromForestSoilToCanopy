@@ -123,6 +123,9 @@ Interestingly we reach a plateu very fast, with only few sampled microhabitats. 
 ggsave("SpeciesAccumulationCurve.png", plot = g, 
        device = "png", dpi = 600, width = 11.69, height = 8.27, 
        units = "in")
+ggsave("SpeciesAccumulationCurve.jpeg", plot = g, 
+       device = "jpeg", dpi = 600, width = 11.69, height = 8.27, 
+       units = "in")
 ggsave("SpeciesAccumulationCurve.pdf", plot = g, 
        device = "pdf", dpi = 600, width = 11.69, height = 8.27, 
        units = "in")

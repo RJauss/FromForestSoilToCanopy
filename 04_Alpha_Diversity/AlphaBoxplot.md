@@ -13,6 +13,7 @@ library(ggplot2)
 library(vegan)
 library(RColorBrewer)
 library(ggpubr)
+library(viridis)
 
 #setwd("04_Alpha_Diversity/")
 
@@ -50,7 +51,7 @@ Now we put the diverity measurements into a habitat specific context. It can be 
 g = ggplot(simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) + 
   stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F) +
   geom_boxplot(show.legend = F) + 
-  scale_fill_manual(values = c(brewer.pal(7, "YlGn"), 
+  scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                 "Fresh Leaves", "Hypnum", "Lichen", 
@@ -63,7 +64,7 @@ g = ggplot(simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) +
   labs(#title = "Alpha Diversity of Samples", 
        #subtitle = "Oomycota"
        y = "Simpson Index (1-D)", 
-       x = NULL) +
+       x = "Microhabitat") +
   #geom_dotplot(aes(x = Microhabitat, y = simpson, fill = TreeSpecies), 
   #             binaxis = "y", stackdir = "center", binwidth = 1, 
   #             binpositions = "all", dotsize = 0.01, 
@@ -112,7 +113,7 @@ Plot Cercozoa Figure
 g_cerco = ggplot(Cerco_simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) + 
   stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F) +
   geom_boxplot(show.legend = F) + 
-  scale_fill_manual(values = c(brewer.pal(7, "YlGn"), 
+  scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                 "Fresh Leaves", "Hypnum", "Lichen", 
@@ -125,7 +126,7 @@ g_cerco = ggplot(Cerco_simpson, aes(x = Microhabitat, y = simpson, fill = Microh
   labs(#title = "Alpha Diversity of Samples",
        #subtitle = "Cercozoa",
        y = "Simpson Index (1-D)", 
-       x = NULL) +
+       x = "Microhabitat") +
   theme(axis.text=element_text(size=12, face = "bold"), 
         axis.title=element_text(size=14, face = "bold"), 
         plot.title = element_text(size = 20, face = "bold", hjust = 0.5), 
@@ -146,7 +147,7 @@ simpson_both = rbind(simpson, Cerco_simpson)
 g_both = ggplot(simpson_both, aes(x = Microhabitat, y = simpson, fill = Microhabitat, color = Group)) + 
   stat_boxplot(geom = "errorbar", width = 0.5) +
   geom_boxplot(width = 0.5) + 
-  scale_fill_manual(values = c(brewer.pal(7, "YlGn"), 
+  scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                 "Fresh Leaves", "Hypnum", "Lichen", 
@@ -169,7 +170,11 @@ g_both = ggplot(simpson_both, aes(x = Microhabitat, y = simpson, fill = Microhab
         plot.subtitle = element_text(size = 14, hjust = 0.5), 
         legend.text = element_text(size = 12), 
         legend.title = element_text(size = 14, face = "bold"))
+```
 
+    ## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+
+``` r
 g_both
 ```
 
@@ -197,14 +202,17 @@ combi = ggarrange(g_cerco, g,
   #                fig.lab = "Figure X", fig.lab.face = "bold", 
   #                fig.lab.size = 18)
 
-ggsave("AlphaBoxplotCombined.tif", plot = combi, 
-       device = "tiff", dpi = 600, width = 16, height = 9, 
-       units = "cm")
+#ggsave("AlphaBoxplotCombined.tif", plot = combi, 
+#       device = "tiff", dpi = 600, width = 16, height = 9, 
+#       units = "cm")
 ggsave("AlphaBoxplotCombined.png", plot = combi, 
-       device = "png", dpi = 600, width = 16, height = 9, 
+       device = "png", dpi = 300, width = 16, height = 9, 
+       units = "cm")
+ggsave("AlphaBoxplotCombined.jpeg", plot = combi, 
+       device = "jpeg", dpi = 300, width = 16, height = 9, 
        units = "cm")
 ggsave("AlphaBoxplotCombined.pdf", plot = combi, 
-       device = "pdf", dpi = 600, width = 16, height = 9, 
+       device = "pdf", dpi = 300, width = 16, height = 9, 
        units = "cm")
 
 combi

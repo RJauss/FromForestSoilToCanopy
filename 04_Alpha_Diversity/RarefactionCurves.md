@@ -12,6 +12,7 @@ library(iNEXT)
 library(ggplot2)
 library(RColorBrewer)
 library(ggpubr)
+library(viridis)
 
 setwd("../04_Alpha_Diversity/")
 
@@ -60,13 +61,13 @@ The resulting file can be directly loaded into `ggiNEXT`, which converts it into
 ``` r
 g = ggiNEXT(Oomycota_out, type = 1, color.var = "site") +
   scale_fill_manual(name = "Microhabitat", 
-                    values = c(brewer.pal(7, "YlGn"), 
+                    values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                "Fresh Leaves", "Hypnum", "Lichen", 
                                "Orthotrichum", "Leaf Litter", "Soil")) +
   scale_color_manual(name = "Microhabitat", 
-                    values = c(brewer.pal(7, "YlGn"), 
+                    values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                "Fresh Leaves", "Hypnum", "Lichen", 
@@ -126,13 +127,13 @@ load("Cercozoa_out.RData")
 
 g_cerco = ggiNEXT(Cercozoa_out, type = 1, color.var = "site") +
   scale_fill_manual(name = "Microhabitat", 
-                    values = c(brewer.pal(7, "YlGn"), 
+                    values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                "Fresh Leaves", "Hypnum", "Lichen", 
                                "Orthotrichum", "Leaf Litter", "Soil")) +
   scale_color_manual(name = "Microhabitat", 
-                    values = c(brewer.pal(7, "YlGn"), 
+                    values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
                                "Fresh Leaves", "Hypnum", "Lichen", 
@@ -186,6 +187,9 @@ combi = ggarrange(g_cerco, g,
 #       units = "cm")
 ggsave("RarefactionCombined.png", plot = combi, 
        device = "png", dpi = 600, width = 24, height = 12, 
+       units = "cm")
+ggsave("RarefactionCombined.jpeg", plot = combi, 
+       device = "jpeg", dpi = 600, width = 24, height = 12, 
        units = "cm")
 ggsave("RarefactionCombined.pdf", plot = combi, 
        device = "pdf", dpi = 600, width = 24, height = 12, 

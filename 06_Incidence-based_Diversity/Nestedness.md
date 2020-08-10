@@ -139,6 +139,9 @@ ggsave("NestedCombined.png", plot = combi,
 ggsave("NestedCombined.pdf", plot = combi, 
        device = "pdf", dpi = 600, width = 29.7, height = 16, 
        units = "cm")
+ggsave("NestedCombined.jpeg", plot = combi, 
+       device = "jpeg", dpi = 600, width = 29.7, height = 16, 
+       units = "cm")
 
 combi
 ```

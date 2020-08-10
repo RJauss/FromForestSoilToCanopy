@@ -349,6 +349,9 @@ combi = ggarrange(g_cerco, g,
 ggsave("TaxonomicCompositionCombined.png", plot = combi, 
        device = "png", dpi = 600, width = 30, height = 37, 
        units = "cm")
+ggsave("TaxonomicCompositionCombined.jpeg", plot = combi, 
+       device = "jpeg", dpi = 600, width = 30, height = 37, 
+       units = "cm")
 ggsave("TaxonomicCompositionCombined.pdf", plot = combi, 
        device = "pdf", dpi = 600, width = 30, height = 37, 
        units = "cm")

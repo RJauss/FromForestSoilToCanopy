@@ -123,7 +123,7 @@ g = ggplot(AggregatedTAXpercent_expanded[AggregatedTAXpercent_expanded > 0, ], a
   scale_x_continuous(labels = scales::percent_format(accuracy = 1)) + 
   scale_y_continuous(labels = scales::comma) +
   theme_minimal() +
-  labs(x = "Sequence similarity to reference database", 
+  labs(x = "Sequence similarity to\nreference database", 
        y = "Number of reads", 
        title = "OTU similarities to reference sequences") +
   theme(axis.text=element_text(size=12), 
@@ -170,7 +170,7 @@ g_OTU = ggplot(TAX_subset[TAX_subset$PercentID > 0, ], aes(x = PercentID)) +
                     limits = c("Oomycota", "Cercozoa")) +
   scale_x_continuous(labels = scales::percent_format(accuracy = 1)) + 
   theme_minimal() +
-  labs(x = "Sequence similarity to reference database", 
+  labs(x = "Sequence similarity to\nreference database", 
        y = "Number of OTUs", 
        title = "OTU similarities to reference sequences") +
   theme(axis.text=element_text(size=12), 
@@ -190,14 +190,12 @@ Interestingly, most OTUs also account for most reads with a ~100% similarity to 
 ``` r
 g$labels$title = NULL
 g_OTU$labels$title = NULL
-g$labels$x = NULL
-g_OTU$labels$x = NULL
 
 combi = ggarrange(g, g_OTU, 
                   labels = c("A", "B"), 
                   ncol = 2, nrow = 1, 
                   common.legend = T, legend = "bottom", 
-                  align = "h", vjust = 2.5) #%>%
+                  align = "h", vjust = 2) #%>%
   #annotate_figure(fig.lab = "Figure X", fig.lab.face = "bold", 
   #                fig.lab.size = 18, 
   #                top = text_grob("OTU and Read similarities to reference sequences", 
@@ -208,10 +206,13 @@ combi = ggarrange(g, g_OTU,
 ggsave("SequenceSimilarityCombined.pdf", plot = combi, 
        device = "pdf", dpi = 600, width = 16, height = 9, 
        units = "cm")
-ggsave("SequenceSimilarityCombined.tif", plot = combi, 
-       device = "tiff", dpi = 600, width = 16, height = 9, 
-       units = "cm")
+#ggsave("SequenceSimilarityCombined.tif", plot = combi, 
+#       device = "tiff", dpi = 600, width = 16, height = 9, 
+#       units = "cm")
 ggsave("SequenceSimilarityCombined.png", plot = combi, 
-       device = "png", dpi = 600, width = 16, height = 9, 
+       device = "png", dpi = 300, width = 16, height = 9, 
+       units = "cm")
+ggsave("SequenceSimilarityCombined.jpeg", plot = combi, 
+       device = "jpeg", dpi = 300, width = 16, height = 9, 
        units = "cm")
 ```

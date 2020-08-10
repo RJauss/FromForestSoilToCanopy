@@ -194,7 +194,7 @@ combi = ggarrange(g, g_OTU,
                   labels = c("A", "B"), 
                   ncol = 2, nrow = 1, 
                   common.legend = T, legend = "bottom", 
-                  align = "h", vjust = 2.5) #%>%
+                  align = "h", vjust = 2) #%>%
   #annotate_figure(fig.lab = "Figure X", fig.lab.face = "bold", 
   #                fig.lab.size = 18, 
   #                top = text_grob("OTU and Read similarities to reference sequences", 
@@ -205,11 +205,14 @@ combi = ggarrange(g, g_OTU,
 ggsave("SequenceSimilarityCombined.pdf", plot = combi, 
        device = "pdf", dpi = 600, width = 16, height = 9, 
        units = "cm")
-ggsave("SequenceSimilarityCombined.tif", plot = combi, 
-       device = "tiff", dpi = 600, width = 16, height = 9, 
-       units = "cm")
+#ggsave("SequenceSimilarityCombined.tif", plot = combi, 
+#       device = "tiff", dpi = 600, width = 16, height = 9, 
+#       units = "cm")
 ggsave("SequenceSimilarityCombined.png", plot = combi, 
-       device = "png", dpi = 600, width = 16, height = 9, 
+       device = "png", dpi = 300, width = 16, height = 9, 
+       units = "cm")
+ggsave("SequenceSimilarityCombined.jpeg", plot = combi, 
+       device = "jpeg", dpi = 300, width = 16, height = 9, 
        units = "cm")
 
 ```
