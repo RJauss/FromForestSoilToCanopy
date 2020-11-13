@@ -53,8 +53,8 @@ Now we put the diverity measurements into a habitat specific context. It can be 
 
 ```{r OomycotaAlphaBoxPlot, fig.width=16, fig.height=9, dpi=600}
 g = ggplot(simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) + 
-  stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F) +
-  geom_boxplot(show.legend = F) + 
+  stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F, lwd = 0.25) +
+  geom_boxplot(show.legend = F, lwd = 0.25) + 
   scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
@@ -113,8 +113,8 @@ Cerco_simpson$Group = "Cercozoa"
 
 ```{r CercoAlphaBoxPlot, fig.width=16, fig.height=9, dpi=600}
 g_cerco = ggplot(Cerco_simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) + 
-  stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F) +
-  geom_boxplot(show.legend = F) + 
+  stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F, lwd = 0.25) +
+  geom_boxplot(show.legend = F, lwd = 0.25) + 
   scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
