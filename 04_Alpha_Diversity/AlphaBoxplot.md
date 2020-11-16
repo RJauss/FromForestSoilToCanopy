@@ -1,12 +1,10 @@
 Plot alpha diversity indices in a boxplot
 ================
 
-After checking the rarefaction and species richness, we can also check
-other alpha diversity measurements. Here, we use the Simpson index,
-which we calculate with the `vegan` package and visualise the diversity
-in a boxplot.
+After checking the rarefaction and species richness, we can also check other alpha diversity measurements. Here, we use the Simpson index, which we calculate with the `vegan` package and visualise the diversity in a boxplot.
 
-## Load Data
+Load Data
+---------
 
 ``` r
 rm(list = ls())
@@ -16,6 +14,7 @@ library(vegan)
 library(RColorBrewer)
 library(ggpubr)
 library(viridis)
+library(agricolae)
 
 #setwd("04_Alpha_Diversity/")
 
@@ -30,11 +29,10 @@ TreeSpecies = SampleMetadata$TreeSpecies
 OTU_Table = OTU_Table[,6:ncol(OTU_Table)]
 ```
 
-## Calculate Alpha Diversity
+Calculate Alpha Diversity
+-------------------------
 
-To run the diversity analyses, simply load the table and specify the
-`index` - in this case: The Simpson index. Then convert it into a
-dataframe and add the metadata and group.
+To run the diversity analyses, simply load the table and specify the `index` - in this case: The Simpson index. Then convert it into a dataframe and add the metadata and group.
 
 ``` r
 simpson = diversity(OTU_Table, index = "simpson")
@@ -43,17 +41,25 @@ simpson$Microhabitat = Microhabitat
 rownames(simpson) = SampleMetadata$SampleID
 simpson$Group = "Oomycota"
 #simpson$TreeSpecies = TreeSpecies
+
+# perform Tukey's Honest Differences Test (HSD) 
+# this defines significant groups which we can plot on top of the boxplots
+
+TukeyLetters = HSD.test(aov(simpson$simpson ~ simpson$Microhabitat),
+                        "simpson$Microhabitat")$group
+TukeyLetters$Microhabitat = rownames(TukeyLetters)
 ```
 
-## Plot the Figure
+Plot the Figure
+---------------
 
-Now we put the diverity measurements into a habitat specific context. It
-can be easiest visualised in a boxplot:
+Now we put the diverity measurements into a habitat specific context. It can be easiest visualised in a boxplot:
 
 ``` r
 g = ggplot(simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) + 
   stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F, lwd = 0.25) +
   geom_boxplot(show.legend = F, lwd = 0.25) + 
+  geom_text(data = TukeyLetters, aes(label = groups), y = 1.025) +
   scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
@@ -82,16 +88,14 @@ g = ggplot(simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) +
 g
 ```
 
-![](AlphaBoxplot_files/figure-gfm/OomycotaAlphaBoxPlot-1.png)<!-- -->
+![](AlphaBoxplot_files/figure-markdown_github/OomycotaAlphaBoxPlot-1.png)
 
-All samples show a very high diversity. Only some of the leaf litter
-samples have a quite low alpha diversity. This could maybe be due to the
-lifestyle of some oomycetes: Saprotrophic oomycetes could experience a
-strong competition in this habitat.
+All samples show a very high diversity. Only some of the leaf litter samples have a quite low alpha diversity. This could maybe be due to the lifestyle of some oomycetes: Saprotrophic oomycetes could experience a strong competition in this habitat.
 
-## Cercozoa
+Cercozoa
+--------
 
-Let’s check if the Cercozoa show a similar pattern:
+Let's check if the Cercozoa show a similar pattern:
 
 ``` r
 Cerco_OTU_Table = as.data.frame(read.csv("../00_Data/Cercozoa/05_Cercozoa_OwnSamples_OTU_Table_min-freq-15684_transposed_withMetadata.tsv", 
@@ -109,14 +113,21 @@ rownames(Cerco_simpson) = Cerco_SampleMetadata$SampleID
 colnames(Cerco_simpson) = "simpson"
 Cerco_simpson$Microhabitat = Cerco_Microhabitat
 Cerco_simpson$Group = "Cercozoa"
+
+TukeyLetters_cerco = HSD.test(aov(Cerco_simpson$simpson ~ 
+                                  Cerco_simpson$Microhabitat),
+                        "Cerco_simpson$Microhabitat")$group
+TukeyLetters_cerco$Microhabitat = rownames(TukeyLetters_cerco)
 ```
 
-## Plot Cercozoa Figure
+Plot Cercozoa Figure
+--------------------
 
 ``` r
 g_cerco = ggplot(Cerco_simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) + 
   stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F, lwd = 0.25) +
   geom_boxplot(show.legend = F, lwd = 0.25) + 
+  geom_text(data = TukeyLetters_cerco, aes(label = groups), y = 1.025) +
   scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
@@ -141,11 +152,9 @@ g_cerco = ggplot(Cerco_simpson, aes(x = Microhabitat, y = simpson, fill = Microh
 g_cerco
 ```
 
-![](AlphaBoxplot_files/figure-gfm/CercoAlphaBoxPlot-1.png)<!-- -->
+![](AlphaBoxplot_files/figure-markdown_github/CercoAlphaBoxPlot-1.png)
 
-For the cercozoa, all samples show an even higher diversity. That’s
-interesting. We could also plot both groups next to each other for a
-direct comparison, like this:
+For the cercozoa, all samples show an even higher diversity. That's interesting. We could also plot both groups next to each other for a direct comparison, like this:
 
 ``` r
 simpson_both = rbind(simpson, Cerco_simpson)
@@ -176,14 +185,17 @@ g_both = ggplot(simpson_both, aes(x = Microhabitat, y = simpson, fill = Microhab
         plot.subtitle = element_text(size = 14, hjust = 0.5), 
         legend.text = element_text(size = 12), 
         legend.title = element_text(size = 14, face = "bold"))
+```
 
+    ## Warning: `expand_scale()` is deprecated; use `expansion()` instead.
+
+``` r
 g_both
 ```
 
-![](AlphaBoxplot_files/figure-gfm/CombinedAlphaBoxplot-1.png)<!-- -->
+![](AlphaBoxplot_files/figure-markdown_github/CombinedAlphaBoxplot-1.png)
 
-For the final visualisation, we combine the two plots not within the
-same plot like above, but next to each other:
+For the final visualisation, we combine the two plots not within the same plot like above, but next to each other:
 
 ``` r
 g$theme$axis.text.x$angle = 45
@@ -221,4 +233,4 @@ ggsave("AlphaBoxplotCombined.pdf", plot = combi,
 combi
 ```
 
-![](AlphaBoxplot_files/figure-gfm/unnamed-chunk-1-1.png)<!-- -->
+![](AlphaBoxplot_files/figure-markdown_github/unnamed-chunk-1-1.png)

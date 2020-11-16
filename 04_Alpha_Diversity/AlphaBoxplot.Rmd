@@ -19,6 +19,7 @@ library(vegan)
 library(RColorBrewer)
 library(ggpubr)
 library(viridis)
+library(agricolae)
 
 #setwd("04_Alpha_Diversity/")
 
@@ -45,6 +46,13 @@ simpson$Microhabitat = Microhabitat
 rownames(simpson) = SampleMetadata$SampleID
 simpson$Group = "Oomycota"
 #simpson$TreeSpecies = TreeSpecies
+
+# perform Tukey's Honest Differences Test (HSD) 
+# this defines significant groups which we can plot on top of the boxplots
+
+TukeyLetters = HSD.test(aov(simpson$simpson ~ simpson$Microhabitat),
+                        "simpson$Microhabitat")$group
+TukeyLetters$Microhabitat = rownames(TukeyLetters)
 ```
 
 ## Plot the Figure
@@ -55,6 +63,7 @@ Now we put the diverity measurements into a habitat specific context. It can be 
 g = ggplot(simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) + 
   stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F, lwd = 0.25) +
   geom_boxplot(show.legend = F, lwd = 0.25) + 
+  geom_text(data = TukeyLetters, aes(label = groups), y = 1.025) +
   scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
@@ -107,6 +116,11 @@ rownames(Cerco_simpson) = Cerco_SampleMetadata$SampleID
 colnames(Cerco_simpson) = "simpson"
 Cerco_simpson$Microhabitat = Cerco_Microhabitat
 Cerco_simpson$Group = "Cercozoa"
+
+TukeyLetters_cerco = HSD.test(aov(Cerco_simpson$simpson ~ 
+                                  Cerco_simpson$Microhabitat),
+                        "Cerco_simpson$Microhabitat")$group
+TukeyLetters_cerco$Microhabitat = rownames(TukeyLetters_cerco)
 ```
 
 ## Plot Cercozoa Figure
@@ -115,6 +129,7 @@ Cerco_simpson$Group = "Cercozoa"
 g_cerco = ggplot(Cerco_simpson, aes(x = Microhabitat, y = simpson, fill = Microhabitat)) + 
   stat_boxplot(geom = "errorbar", width = 0.2, show.legend = F, lwd = 0.25) +
   geom_boxplot(show.legend = F, lwd = 0.25) + 
+  geom_text(data = TukeyLetters_cerco, aes(label = groups), y = 1.025) +
   scale_fill_manual(values = c(viridis(7, direction = -1), 
                                "#8e8878", "#524640"), 
                     limits = c("Arboreal Soil", "Bark", "Deadwood", 
