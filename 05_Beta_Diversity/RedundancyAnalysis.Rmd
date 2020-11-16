@@ -11,6 +11,8 @@ In the method before (NMDS), we performed an unconstrained analysis. Let's check
 
 In a constrained analysis, we test the influence of explanatory variables -- which are here the microhabitats and tree species -- on response variables (our OTU abundances). The principle is similar to a PCA, but the idea is to regress the PCA scores on the environmental variables.
 
+## Load Data
+
 First, load the data and define the variables:
 
 ```{r Load Data, message=FALSE, results='hide'}
@@ -41,6 +43,8 @@ Microhabitat = SampleMetadata$Microhabitat
 TreeSpecies = SampleMetadata$TreeSpecies
 ```
 
+## Perform RDA
+
 Next we normalise our species matrix with a hellinger transformation and perform the redundancy analysis. We want to test both the microhabitats as well as the tree species as an explanatory variable:
 
 ```{r RDA}
@@ -53,6 +57,8 @@ In an RDA, you can define two types of `scaling`:
 
 - `scaling = 1` gives a distance plot, where euclidean distances are given by the position of the objects. 
 - `scaling = 2` represents a linear correlation between the vectors. This means, two vectors with an angle of 90° are not correlated, while vectors pointing into the same direction are highly correlated. This is what we want to see here, so we set scaling to 2.
+
+## Create Dataframes
 
 From the RDA-summary object, we need to extract three dataframes:
 
@@ -74,6 +80,8 @@ df3 = data.frame(summary_species_mat_rda$centroids[10:12,1:2])
 rownames(df3) = gsub("TreeSpecies", "", rownames(df3))
 df3$TreeSpecies = rownames(df3)
 ```
+
+## Plot RDA
 
 Now let's plot the results using the three dataframes. Some of the labels overlap, so I manually adjust the hjust with 0 (label right) or 1 (label left). From the summary we can also extract information about the proportion of explained variance in the axes, which will be added to the axes labels.
 
@@ -113,9 +121,9 @@ g = ggplot(df2, aes(x=RDA1, y=RDA2)) +
                 hjust=0.5*(1-sign(RDA1)),
                 vjust=0.5*(1-sign(RDA2))), 
             fill= c("#c2b2b4", "#53687e", "#6b4e71"), 
-            color = "white", size=4) + 
-  scale_x_continuous(limits = c(-0.6, 0.6)) + 
-  scale_y_continuous(limits = c(-0.6, 0.6)) +
+            color = "white", size=4, fontface = "italic") + 
+  scale_x_continuous(limits = c(-0.8, 0.8)) + 
+  scale_y_continuous(limits = c(-0.8, 0.8)) +
   labs(title = "Redundancy Analysis - Oomycota", 
        x = paste0("RDA1\nVariance explained: ",
                   round(as.numeric(summary_species_mat_rda$cont$importance["Proportion Explained", "RDA1"]), digits = 4) * 100, 
@@ -138,7 +146,8 @@ g = ggplot(df2, aes(x=RDA1, y=RDA2)) +
                     values = "darkslategrey") +
   guides(color = F, 
          linetype=guide_legend(keywidth = 3, keyheight = 1, order = 1), 
-         fill = guide_legend(order = 2))
+         fill = guide_legend(order = 2)) + 
+  coord_equal()
 
 g
 ```
@@ -219,9 +228,9 @@ g_cerco = ggplot(df2_cerco, aes(x=RDA1, y=RDA2)) +
                 hjust=0.5*(1-sign(RDA1)),
                 vjust=c(0,1,0)), 
             fill= c("#c2b2b4", "#53687e", "#6b4e71"), 
-            color = "white", size=4) + 
-  scale_x_continuous(limits = c(-0.6, 0.6)) + 
-  scale_y_continuous(limits = c(-0.6, 0.8)) +
+            color = "white", size=4, fontface = "italic") + 
+  scale_x_continuous(limits = c(-0.8, 0.8)) + 
+  scale_y_continuous(limits = c(-0.8, 0.8)) +
   labs(title = "Redundancy Analysis - Cercozoa", 
        x = paste0("RDA1\nVariance explained: ",
                   round(as.numeric(summary_species_mat_rda_cerco$cont$importance["Proportion Explained", "RDA1"]), digits = 4) * 100, 
@@ -244,7 +253,8 @@ g_cerco = ggplot(df2_cerco, aes(x=RDA1, y=RDA2)) +
                     values = "darkslategrey") +
   guides(color = F, 
          linetype=guide_legend(keywidth = 3, keyheight = 1, order = 1), 
-         fill = guide_legend(order = 2))
+         fill = guide_legend(order = 2)) + 
+  coord_equal()
 
 g_cerco
 ```
@@ -264,7 +274,7 @@ g_cerco$labels$title = NULL
 
 combi = ggarrange(g_cerco, g, 
                   labels = c("A", "B"), 
-                  ncol = 1, nrow = 2, 
+                  ncol = 2, nrow = 1, 
                   common.legend = T, legend = "bottom", 
                   align = "h", vjust = 1) #%>%
   #annotate_figure(fig.lab = "Figure X", fig.lab.face = "bold", 
@@ -273,16 +283,16 @@ combi = ggarrange(g_cerco, g,
   #                                face = "bold", size = 20))
 
 ggsave("RedundancyCombined.pdf", plot = combi, 
-       device = "pdf", dpi = 300, width = 20, height = 20, 
+       device = "pdf", dpi = 300, width = 25, height = 15, 
        units = "cm")
 ggsave("RedundancyCombined.jpeg", plot = combi, 
-       device = "jpeg", dpi = 300, width = 20, height = 20, 
+       device = "jpeg", dpi = 300, width = 25, height = 15, 
        units = "cm")
 #ggsave("RedundancyCombined.tif", plot = combi, 
 #       device = "tiff", dpi = 600, width = 20, height = 26, 
 #       units = "in")
 ggsave("RedundancyCombined.png", plot = combi, 
-       device = "png", dpi = 300, width = 20, height = 20, 
+       device = "png", dpi = 300, width = 25, height = 15, 
        units = "cm")
 
 combi

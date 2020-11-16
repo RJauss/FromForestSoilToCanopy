@@ -91,19 +91,23 @@ g = ggplot() +
                                "#8e8878", "#524640")) + 
   geom_point(data = data.scores, 
              aes(x = NMDS1, y = NMDS2), 
-             size = 2,
-             color = "#5d5f66") + 
+             size = 1.25,
+             color = "grey10") + 
   geom_polygon(data = hull.data_TreeSpecies, 
                aes(x=NMDS1, y=NMDS2, group = TreeSpecies, color = TreeSpecies), 
-               alpha = 0.7, fill = NA, linetype = "dashed", size = 1) +
-  scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71")) +
-  geom_text(aes(x = 0.25, y = -0.5, label = as.character(paste0(OTU.NMDS.bray$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
+               alpha = 0.7, fill = NA, linetype = "dashed", size = 0.7) +
+  scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71"), 
+                     labels = c(expression(italic("Fraxinus excelsior")), 
+                                expression(italic("Quercus robur")), 
+                                expression(italic("Tilia cordata")))) +
+  geom_text(aes(x = 0.25, y = -0.6, label = as.character(paste0(OTU.NMDS.bray$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
   coord_equal() + 
   theme_minimal() +
   labs(title = "Oomycota") +
   theme(axis.text=element_text(size=12), 
         axis.title=element_text(size=14, face = "bold"), 
         legend.text = element_text(size = 12), 
+        legend.text.align = 0, 
         legend.title = element_text(size = 14, face = "bold"), 
         plot.title = element_text(size = 20, face = "bold", hjust = 0.5))
 
@@ -209,47 +213,35 @@ OTU.NMDS.bray_cerco = metaMDS(Dist_cerco, # The distance matrix
 ```
 
     ## Run 0 stress 0.1079607 
-    ## Run 1 stress 0.1150984 
-    ## Run 2 stress 0.1159765 
-    ## Run 3 stress 0.1123812 
-    ## Run 4 stress 0.1076601 
+    ## Run 1 stress 0.1159872 
+    ## Run 2 stress 0.1145437 
+    ## Run 3 stress 0.1135064 
+    ## Run 4 stress 0.1173196 
+    ## Run 5 stress 0.1127145 
+    ## Run 6 stress 0.1076603 
     ## ... New best solution
-    ## ... Procrustes: rmse 0.0207833  max resid 0.1480889 
-    ## Run 5 stress 0.1115885 
-    ## Run 6 stress 0.1118165 
-    ## Run 7 stress 0.1106263 
-    ## Run 8 stress 0.1117256 
-    ## Run 9 stress 0.1108549 
-    ## Run 10 stress 0.1118396 
-    ## Run 11 stress 0.1174023 
-    ## Run 12 stress 0.1107903 
-    ## Run 13 stress 0.1105669 
-    ## Run 14 stress 0.1127127 
-    ## Run 15 stress 0.110791 
-    ## Run 16 stress 0.1118396 
-    ## Run 17 stress 0.1157553 
-    ## Run 18 stress 0.1107897 
-    ## Run 19 stress 0.1110343 
-    ## Run 20 stress 0.1135712 
-    ## Run 21 stress 0.1155427 
-    ## Run 22 stress 0.1115251 
-    ## Run 23 stress 0.1108553 
-    ## Run 24 stress 0.1098133 
-    ## Run 25 stress 0.1138352 
-    ## Run 26 stress 0.1109132 
-    ## Run 27 stress 0.1149215 
-    ## Run 28 stress 0.1179135 
-    ## Run 29 stress 0.1156976 
-    ## Run 30 stress 0.1152558 
-    ## Run 31 stress 0.1196421 
-    ## Run 32 stress 0.11079 
-    ## Run 33 stress 0.1121874 
-    ## Run 34 stress 0.1190362 
-    ## Run 35 stress 0.1115196 
-    ## Run 36 stress 0.1138955 
-    ## Run 37 stress 0.1076599 
+    ## ... Procrustes: rmse 0.02084431  max resid 0.1482931 
+    ## Run 7 stress 0.1151048 
+    ## Run 8 stress 0.1179667 
+    ## Run 9 stress 0.1121893 
+    ## Run 10 stress 0.117651 
+    ## Run 11 stress 0.1152956 
+    ## Run 12 stress 0.1183538 
+    ## Run 13 stress 0.1151118 
+    ## Run 14 stress 0.1130372 
+    ## Run 15 stress 0.1151008 
+    ## Run 16 stress 0.1077948 
+    ## ... Procrustes: rmse 0.004534323  max resid 0.0285156 
+    ## Run 17 stress 0.115296 
+    ## Run 18 stress 0.1176219 
+    ## Run 19 stress 0.1135707 
+    ## Run 20 stress 0.1146335 
+    ## Run 21 stress 0.113368 
+    ## Run 22 stress 0.1109157 
+    ## Run 23 stress 0.1106284 
+    ## Run 24 stress 0.1076594 
     ## ... New best solution
-    ## ... Procrustes: rmse 0.0003945649  max resid 0.001575083 
+    ## ... Procrustes: rmse 0.0003273751  max resid 0.001638141 
     ## ... Similar to previous best
     ## *** Solution reached
 
@@ -292,12 +284,15 @@ g_cerco = ggplot() +
                                "#8e8878", "#524640")) + 
   geom_point(data = data.scores_cerco, 
              aes(x = NMDS1, y = NMDS2), 
-             size = 2,
-             color = "#5d5f66") + 
+             size = 1.25,
+             color = "grey10") + 
   geom_polygon(data = hull.data_TreeSpecies_cerco, 
                aes(x=NMDS1, y=NMDS2, group = TreeSpecies, color = TreeSpecies), 
-               alpha = 0.7, fill = NA, linetype = "dashed", size = 1) +
-  scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71")) +
+               alpha = 0.7, fill = NA, linetype = "dashed", size = 0.7) +
+  scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71"), 
+                     labels = c(expression(italic("Fraxinus excelsior")), 
+                                expression(italic("Quercus robur")), 
+                                expression(italic("Tilia cordata")))) +
   geom_text(aes(x = 0.2, y = -0.4, label = as.character(paste0(OTU.NMDS.bray_cerco$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray_cerco$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
   coord_equal() + 
   theme_minimal() +
@@ -305,6 +300,7 @@ g_cerco = ggplot() +
   theme(axis.text=element_text(size=12), 
         axis.title=element_text(size=14, face = "bold"), 
         legend.text = element_text(size = 12), 
+        legend.text.align = 0,
         legend.title = element_text(size = 14, face = "bold"), 
         plot.title = element_text(size = 20, face = "bold", hjust = 0.5))
 

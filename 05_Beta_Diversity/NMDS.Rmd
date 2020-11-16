@@ -98,19 +98,23 @@ g = ggplot() +
                                "#8e8878", "#524640")) + 
   geom_point(data = data.scores, 
              aes(x = NMDS1, y = NMDS2), 
-             size = 2,
-             color = "#5d5f66") + 
+             size = 1.25,
+             color = "grey10") + 
   geom_polygon(data = hull.data_TreeSpecies, 
                aes(x=NMDS1, y=NMDS2, group = TreeSpecies, color = TreeSpecies), 
-               alpha = 0.7, fill = NA, linetype = "dashed", size = 1) +
-  scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71")) +
-  geom_text(aes(x = 0.25, y = -0.5, label = as.character(paste0(OTU.NMDS.bray$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
+               alpha = 0.7, fill = NA, linetype = "dashed", size = 0.7) +
+  scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71"), 
+                     labels = c(expression(italic("Fraxinus excelsior")), 
+                                expression(italic("Quercus robur")), 
+                                expression(italic("Tilia cordata")))) +
+  geom_text(aes(x = 0.25, y = -0.6, label = as.character(paste0(OTU.NMDS.bray$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
   coord_equal() + 
   theme_minimal() +
   labs(title = "Oomycota") +
   theme(axis.text=element_text(size=12), 
         axis.title=element_text(size=14, face = "bold"), 
         legend.text = element_text(size = 12), 
+        legend.text.align = 0, 
         legend.title = element_text(size = 14, face = "bold"), 
         plot.title = element_text(size = 20, face = "bold", hjust = 0.5))
 
@@ -295,12 +299,15 @@ g_cerco = ggplot() +
                                "#8e8878", "#524640")) + 
   geom_point(data = data.scores_cerco, 
              aes(x = NMDS1, y = NMDS2), 
-             size = 2,
-             color = "#5d5f66") + 
+             size = 1.25,
+             color = "grey10") + 
   geom_polygon(data = hull.data_TreeSpecies_cerco, 
                aes(x=NMDS1, y=NMDS2, group = TreeSpecies, color = TreeSpecies), 
-               alpha = 0.7, fill = NA, linetype = "dashed", size = 1) +
-  scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71")) +
+               alpha = 0.7, fill = NA, linetype = "dashed", size = 0.7) +
+  scale_color_manual(values = c("#c2b2b4", "#53687e", "#6b4e71"), 
+                     labels = c(expression(italic("Fraxinus excelsior")), 
+                                expression(italic("Quercus robur")), 
+                                expression(italic("Tilia cordata")))) +
   geom_text(aes(x = 0.2, y = -0.4, label = as.character(paste0(OTU.NMDS.bray_cerco$ndim, "D Stress: ", round(as.numeric(OTU.NMDS.bray_cerco$stress), digits = 4)))), parse = F, color = "#5d5f66", size = 4) +
   coord_equal() + 
   theme_minimal() +
@@ -308,6 +315,7 @@ g_cerco = ggplot() +
   theme(axis.text=element_text(size=12), 
         axis.title=element_text(size=14, face = "bold"), 
         legend.text = element_text(size = 12), 
+        legend.text.align = 0,
         legend.title = element_text(size = 14, face = "bold"), 
         plot.title = element_text(size = 20, face = "bold", hjust = 0.5))
 
