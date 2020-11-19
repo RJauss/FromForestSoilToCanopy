@@ -121,13 +121,13 @@ return(data3)
 
 Now we plot it with `ggplot` and use the Stratum as a facet:
 
-```{r Plot Barchart, fig.width=6.2,fig.height=6.2,dpi=300}
+```{r Plot Barchart, fig.width=6.2,fig.height=3,dpi=300}
 OrderData = OrderDataFunction(incidence = F)
 
 g = ggplot(OrderData, aes(x = Microhabitat, y = Abundance, fill = Order)) + 
   geom_bar(position = position_fill(), stat = "identity") + 
   facet_grid(cols = vars(Stratum), scales = "free", space = "free") + 
-  scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::percent) +
   labs(y = "Relative\nAbundance") + 
   scale_fill_viridis(discrete = T, option = "B") +
   theme_minimal() +
@@ -147,7 +147,7 @@ g
 
 Repeat the steps for the Cercozoa:
 
-```{r Cercozoa, fig.width=6.2,fig.height=6.2,dpi=300}
+```{r Cercozoa, fig.width=6.2,fig.height=3,dpi=300}
 TAX_cerco = read.csv("../00_Data/Cercozoa/04_Cercozoa_OwnSamples_OTU_ContingencyTable_filtered_sequences_NCBI-nt_blasted_sorted_BestHit-TaxonomyTable_Cercozoa_sequences_vsearch-V4-BestHit_AnnotationRefined_noPipe.tsv", 
                     header = F, 
                     sep = "\t", 
@@ -235,7 +235,7 @@ OrderData_cerco = OrderDataFunction_cerco(incidence = F)
 g_cerco = ggplot(OrderData_cerco, aes(x = Microhabitat, y = Abundance, fill = Order)) + 
   geom_bar(position = position_fill(), stat = "identity") + 
   facet_grid(cols = vars(Stratum), scales = "free", space = "free") + 
-  scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::percent) +
   labs(y = "Relative\nAbundance") + 
   scale_fill_viridis(discrete = T, option = "B") +
   #scale_fill_brewer(type = "qual", palette = "Paired") + 
@@ -254,7 +254,7 @@ g_cerco
 
 ## Combine Plots
 
-```{r CombinedPlots, fig.width=6.2,fig.height=6.2,dpi=300}
+```{r CombinedPlots, fig.width=6.2,fig.height=6.2,dpi=300, warning=FALSE}
 combi = ggarrange(g_cerco, g, 
                   labels = c("A", "B"), 
                   ncol = 1, nrow = 2)
@@ -262,15 +262,15 @@ combi = ggarrange(g_cerco, g,
 #ggsave("TaxonomicCompositionCombined.tif", plot = combi, 
 #       device = "tiff", dpi = 600, width = 30, height = 37, 
 #       units = "cm")
-ggsave("TaxonomyPerMicrohabitatCombined.png", plot = combi, 
-       device = "png", dpi = 300, width = 15, height = 15.5, 
-       units = "cm")
-ggsave("TaxonomyPerMicrohabitatCombined.jpeg", plot = combi, 
-       device = "jpeg", dpi = 300, width = 15, height = 15.5, 
-       units = "cm")
-ggsave("TaxonomyPerMicrohabitatCombined.pdf", plot = combi, 
-       device = "pdf", dpi = 300, width = 15, height = 15.5, 
-       units = "cm")
+#ggsave("TaxonomyPerMicrohabitatCombined.png", plot = combi, 
+#       device = "png", dpi = 300, width = 15, height = 15.5, 
+#       units = "cm")
+#ggsave("TaxonomyPerMicrohabitatCombined.jpeg", plot = combi, 
+#       device = "jpeg", dpi = 300, width = 15, height = 15.5, 
+#       units = "cm")
+#ggsave("TaxonomyPerMicrohabitatCombined.pdf", plot = combi, 
+#       device = "pdf", dpi = 300, width = 15, height = 15.5, 
+#       units = "cm")
 
 combi
 ```
@@ -279,7 +279,7 @@ combi
 
 Now we want to try an Indicative Value Analysis (IndVal) to determine taxa significantly indicate for a specific microhabitat. We mark the associated Order in the respecive Microhabitat with an "X" in the Barplot.
 
-```{r IndicatorAnalysis}
+```{r IndicatorAnalysis, dpi = 300, fig.width = 6, fig.height = 3, warning=FALSE}
 OTU_TableOrder = OTU_Table
 colnames(OTU_TableOrder) = paste0(TAX$Order, "_", TAX$OTU_Number)
 
@@ -322,7 +322,7 @@ g_Ind = ggplot(OrderData, aes(x = Microhabitat, y = Abundance, fill = Order)) +
   geom_text(aes(label = IndicatorSpecies), stat = "identity", 
             position = position_fill(vjust = 0.5), 
             size = 2, color = "grey50", fontface = "bold") +
-  scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::percent) +
   labs(y = "Relative\nAbundance") + 
   scale_fill_viridis(discrete = T, option = "B") +
   theme_minimal() +
@@ -340,7 +340,7 @@ g_Ind
 
 ## Cercozoa Indicator Analysis
 
-```{r}
+```{r CercoIndicatorAnalysis, dpi = 300, fig.width = 6, fig.height = 3, warning=FALSE}
 OTU_TableOrder_cerco = OTU_Table_cerco
 colnames(OTU_TableOrder_cerco) = paste0(TAX_cerco$OrderSubset, "_", TAX_cerco$OTU_Number)
 
@@ -383,7 +383,7 @@ g_cerco_Ind = ggplot(OrderData_cerco, aes(x = Microhabitat, y = Abundance, fill 
   geom_text(aes(label = IndicatorSpecies), stat = "identity", 
             position = position_fill(vjust = 0.5), 
             size = 2, color = "grey50", fontface = "bold") +
-  scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::percent) +
   labs(y = "Relative\nAbundance") + 
   scale_fill_viridis(discrete = T, option = "B") +
   theme_minimal() +
@@ -396,12 +396,12 @@ g_cerco_Ind = ggplot(OrderData_cerco, aes(x = Microhabitat, y = Abundance, fill 
         strip.text = element_text(size=12, face = "bold"), 
         panel.grid = element_blank())
 
-g_Ind
+g_cerco_Ind
 ```
 
 ## Combine Indicator Analysis
 
-```{r CombineWithIndicator, warning=FALSE}
+```{r CombineWithIndicator, warning=FALSE, dpi = 300, fig.width = 6, fig.height = 6.2, warning=FALSE}
 combi = ggarrange(g_cerco_Ind, g_Ind, 
                   labels = c("A", "B"), 
                   ncol = 1, nrow = 2)

@@ -123,7 +123,7 @@ OrderData = OrderDataFunction(incidence = F)
 g = ggplot(OrderData, aes(x = Microhabitat, y = Abundance, fill = Order)) + 
   geom_bar(position = position_fill(), stat = "identity") + 
   facet_grid(cols = vars(Stratum), scales = "free", space = "free") + 
-  scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::percent) +
   labs(y = "Relative\nAbundance") + 
   scale_fill_viridis(discrete = T, option = "B") +
   theme_minimal() +
@@ -234,7 +234,7 @@ OrderData_cerco = OrderDataFunction_cerco(incidence = F)
 g_cerco = ggplot(OrderData_cerco, aes(x = Microhabitat, y = Abundance, fill = Order)) + 
   geom_bar(position = position_fill(), stat = "identity") + 
   facet_grid(cols = vars(Stratum), scales = "free", space = "free") + 
-  scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::percent) +
   labs(y = "Relative\nAbundance") + 
   scale_fill_viridis(discrete = T, option = "B") +
   #scale_fill_brewer(type = "qual", palette = "Paired") + 
@@ -264,15 +264,15 @@ combi = ggarrange(g_cerco, g,
 #ggsave("TaxonomicCompositionCombined.tif", plot = combi, 
 #       device = "tiff", dpi = 600, width = 30, height = 37, 
 #       units = "cm")
-ggsave("TaxonomyPerMicrohabitatCombined.png", plot = combi, 
-       device = "png", dpi = 300, width = 15, height = 15.5, 
-       units = "cm")
-ggsave("TaxonomyPerMicrohabitatCombined.jpeg", plot = combi, 
-       device = "jpeg", dpi = 300, width = 15, height = 15.5, 
-       units = "cm")
-ggsave("TaxonomyPerMicrohabitatCombined.pdf", plot = combi, 
-       device = "pdf", dpi = 300, width = 15, height = 15.5, 
-       units = "cm")
+#ggsave("TaxonomyPerMicrohabitatCombined.png", plot = combi, 
+#       device = "png", dpi = 300, width = 15, height = 15.5, 
+#       units = "cm")
+#ggsave("TaxonomyPerMicrohabitatCombined.jpeg", plot = combi, 
+#       device = "jpeg", dpi = 300, width = 15, height = 15.5, 
+#       units = "cm")
+#ggsave("TaxonomyPerMicrohabitatCombined.pdf", plot = combi, 
+#       device = "pdf", dpi = 300, width = 15, height = 15.5, 
+#       units = "cm")
 
 combi
 ```
@@ -327,7 +327,7 @@ g_Ind = ggplot(OrderData, aes(x = Microhabitat, y = Abundance, fill = Order)) +
   geom_text(aes(label = IndicatorSpecies), stat = "identity", 
             position = position_fill(vjust = 0.5), 
             size = 2, color = "grey50", fontface = "bold") +
-  scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::percent) +
   labs(y = "Relative\nAbundance") + 
   scale_fill_viridis(discrete = T, option = "B") +
   theme_minimal() +
@@ -342,8 +342,6 @@ g_Ind = ggplot(OrderData, aes(x = Microhabitat, y = Abundance, fill = Order)) +
 
 g_Ind
 ```
-
-    ## Warning: Removed 60 rows containing missing values (geom_text).
 
 ![](TaxonomyPerMicrohabitat_files/figure-markdown_github/IndicatorAnalysis-1.png)
 
@@ -393,7 +391,7 @@ g_cerco_Ind = ggplot(OrderData_cerco, aes(x = Microhabitat, y = Abundance, fill 
   geom_text(aes(label = IndicatorSpecies), stat = "identity", 
             position = position_fill(vjust = 0.5), 
             size = 2, color = "grey50", fontface = "bold") +
-  scale_y_continuous(labels = scales::comma) +
+  scale_y_continuous(labels = scales::percent) +
   labs(y = "Relative\nAbundance") + 
   scale_fill_viridis(discrete = T, option = "B") +
   theme_minimal() +
@@ -406,12 +404,10 @@ g_cerco_Ind = ggplot(OrderData_cerco, aes(x = Microhabitat, y = Abundance, fill 
         strip.text = element_text(size=12, face = "bold"), 
         panel.grid = element_blank())
 
-g_Ind
+g_cerco_Ind
 ```
 
-    ## Warning: Removed 60 rows containing missing values (geom_text).
-
-![](TaxonomyPerMicrohabitat_files/figure-markdown_github/unnamed-chunk-1-1.png)
+![](TaxonomyPerMicrohabitat_files/figure-markdown_github/CercoIndicatorAnalysis-1.png)
 
 Combine Indicator Analysis
 --------------------------
