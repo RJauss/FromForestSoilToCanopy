@@ -172,6 +172,8 @@ TAX_cerco$Order = gsub("Order_NoHit", "Undetermined",
 # remove orders represented by less than 1% of reads for sake of clarity
 TAX_cerco$OrderSubset = as.character(TAX_cerco$Order)
 OrderListOther_cerco = vector()
+# loop over the orders and check their amount of reads in %
+# if it is less than 1, concatenate them to "Other"
 for(Order in unique(TAX_cerco$Order)){
   if(sum(TAX_cerco[TAX_cerco$Order == as.character(Order), "Abundance"])/sum(TAX_cerco$Abundance)*100 < 1){
     OrderListOther_cerco = c(OrderListOther_cerco, as.character(Order))
@@ -281,17 +283,27 @@ Now we want to try an Indicative Value Analysis (IndVal) to determine taxa signi
 
 ```{r IndicatorAnalysis, dpi = 300, fig.width = 6, fig.height = 3, warning=FALSE}
 OTU_TableOrder = OTU_Table
+# assign the OTUs their Order and Number 
+# we later strip the number to aggregate by order
 colnames(OTU_TableOrder) = paste0(TAX$Order, "_", TAX$OTU_Number)
 
+# the function multipatt calculates the species abundance patterns
+# in combination with the microhabitats
+# duleg = T means we assign indicator species only to one habitat
+# (after Dufrene & Legendre, hence 'duleg')
 indvalOrder = multipatt(OTU_TableOrder, SampleMetadata$Microhabitat, 
                         duleg = T, control = how(nperm = 999))
 
+# keep only significant indicatos with p<=0.05
 indvalOrdersign = indvalOrder$sign[indvalOrder$sign$p.value <= 0.05 ,1:9]
+
+# some cosmetic changes to the column names
 colnames(indvalOrdersign) = gsub(pattern = "^s.", replacement = "", 
                                  x = colnames(indvalOrdersign))
+
+# now strip the number and aggregate by order
 RownamesOrder = gsub(pattern = "_[0-9]*$", replacement = "", 
                                  x = rownames(indvalOrdersign))
-
 indvalOrdersign_aggregated = aggregate(x = indvalOrdersign, 
                                        by = list(RownamesOrder), 
                                        FUN = sum)
@@ -305,17 +317,20 @@ for(Order in unique(TAX$Order)){
   }
 }
 
+# melt dataframe and convert the indicator to an "X" or NA
+# this will then be plotted on the bar chart
 indvalOrdersign_aggregated_melted = melt(indvalOrdersign_aggregated, 
                                          id.vars = "Group.1")
 indvalOrdersign_aggregated_melted$value = ifelse(indvalOrdersign_aggregated_melted$value > 0, "X", NA_character_)
 
 colnames(indvalOrdersign_aggregated_melted) = c("Order", "Microhabitat", "IndicatorSpecies")
 
+# bind the indicative value analysis on the OrderData
 OrderData = cbind(OrderData, indvalOrdersign_aggregated_melted$IndicatorSpecies)
 colnames(OrderData) = c("Order", "Microhabitat", "Abundance", "Stratum", 
                         "IndicatorSpecies")
 
-
+# now repeat the plot, but here we also add geom_text (the X's for the indicators)
 g_Ind = ggplot(OrderData, aes(x = Microhabitat, y = Abundance, fill = Order)) + 
   geom_bar(position = position_fill(), stat = "identity") + 
   facet_grid(cols = vars(Stratum), scales = "free", space = "free") + 
@@ -339,6 +354,8 @@ g_Ind
 ```
 
 ## Cercozoa Indicator Analysis
+
+Now we do the same for the Cercozoa. Again, perform the indicative value analysis, concatenate by order, add missing taxa and plot the results on the stacked bar chart:
 
 ```{r CercoIndicatorAnalysis, dpi = 300, fig.width = 6, fig.height = 3, warning=FALSE}
 OTU_TableOrder_cerco = OTU_Table_cerco
